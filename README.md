@@ -12,7 +12,7 @@ Users should be able to:
 
 ## My process
 
-Keeping in mind the goal to be achieved, I created a mobile app which could tackle all the given points.
+Keeping in mind the goal to be achieved, I created a mobile app which could tackle all the given points. Instead of going for a website which is rendered in mobile, I have created the app in flutter which can be compiled in android as well as iOS.
 The flutter app uses [flutter_map](https://pub.dev/packages/flutter_map) which is a Dart implementation of [Leaflet](https://leafletjs.com/) for Flutter apps.
 
 ### Usage
