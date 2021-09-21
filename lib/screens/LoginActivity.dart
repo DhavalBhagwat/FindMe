@@ -1,10 +1,11 @@
-import 'package:findme/utils/Styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:get/get.dart';
+import 'package:get/get_navigation/src/snackbar/snack.dart';
+import 'package:get/route_manager.dart';
 import 'package:sawo/sawo.dart';
 import 'package:findme/utils/SawoUtils.dart';
+import 'package:findme/utils/Styles.dart';
 
 class LoginActivity extends StatefulWidget {
 
