@@ -1,16 +1,29 @@
-# findme
+## Overview
 
-A new Flutter project.
+### The challenge
 
-## Getting Started
+Users should be able to:
 
-This project is a starting point for a Flutter application.
+- Login using SAWO sdk (the passwordless way)
+- View the optimal layout for each page depending on their device's screen size
+- See hover states for all interactive elements on the page
+- See their own IP address on the map on the initial page load
+- Search for any IP addresses or domains and see the key information and location
 
-A few resources to get you started if this is your first Flutter project:
+## My process
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Keeping in mind the goal to be achieved, I created a mobile app which could tackle all the given points.
+The flutter app uses [flutter_map](https://pub.dev/packages/flutter_map) which is a Dart implementation of [Leaflet](https://leafletjs.com/) for Flutter apps.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Usage
+
+Please find the apk in the releases section
+
+### Built with
+
+- [sawo](https://pub.dev/packages/sawo/score)
+- [get](https://pub.dev/packages/get)
+- [flutter_map](https://pub.dev/packages/flutter_map)
+- [latlong2](https://pub.dev/packages/latlong2/versions)
+- [flutter_svg](https://pub.dev/packages/flutter_svg)
+- [http](https://pub.dev/packages/http)

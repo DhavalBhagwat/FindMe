@@ -3,8 +3,8 @@ import 'package:sawo/sawo.dart';
 class SawoUtils {
 
   static Sawo getInstance() => Sawo(
-    apiKey: "184b642b-4df1-4cd1-8af9-13cd67afd30f",
-    secretKey: "6148bf4347fda11932859579uISTvg4mboUZx6jgET5wBLP3",
+    apiKey: "fad58c28-8913-4f15-9644-3552507b039b",
+    secretKey: "6148af4347fda1193285956egQtQsTs2YGrou59zDjyyjHqe",
   );
 
 }
