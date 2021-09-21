@@ -1,3 +1,4 @@
+import 'package:findme/utils/Styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -18,21 +19,13 @@ class InfoSection extends StatelessWidget {
         children: [
           Text(
             title!,
-            style: TextStyle(
-                color: Color(0xFF969696),
-                fontSize: 12.0,
-                fontWeight: FontWeight.bold
-            ),
+            style: Styles.keyStyle(),
           ),
           SizedBox(height: 4.0),
           Text(
             value!,
             textAlign: TextAlign.center,
-            style: TextStyle(
-                color: Color(0xFF2B2B2B),
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold
-            ),
+            style: Styles.valueStyle(),
           ),
         ],
       ),

@@ -1,3 +1,4 @@
+import 'package:findme/utils/Styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -24,26 +25,37 @@ class _LoginActivityState extends State<LoginActivity> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "IP Address Tracker",
-                style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold
+      body: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage("assets/pattern-bg.png"),
+                fit: BoxFit.cover
+            )
+        ),
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "IP Address Tracker",
+                  style: Styles.titleStyle(),
                 ),
-              ),
-              SizedBox(height: 20.0),
-              ElevatedButton(
-                onPressed: () => _login(),
-                child: Text("Login"),
-              ),
-            ],
+                SizedBox(height: 20.0),
+                ElevatedButton(
+                  style: ButtonStyle(
+                    foregroundColor: MaterialStateProperty.all(Colors.white),
+                    backgroundColor: MaterialStateProperty.all<Color>(Styles.darkGrey),
+                  ),
+                  onPressed: () => _login(),
+                  child: Text(
+                      "Login",
+                      style: Styles.loginButtonStyle()
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -60,7 +72,7 @@ class _LoginActivityState extends State<LoginActivity> {
 
   void _callback(context, payload) {
     if (payload == null || (payload is String && payload.length == 0)) {
-      Get.snackbar("Alert !", "Login failed. Please try aganin.", snackPosition: SnackPosition.BOTTOM, backgroundColor: Color(0xFFFF8A80));
+      Get.snackbar("Alert !", "Login failed. Please try again.", snackPosition: SnackPosition.BOTTOM, backgroundColor: Styles.lightRed);
     }
     debugPrint("Login successful.");
     Get.offNamed('/homeActivity', arguments: {});

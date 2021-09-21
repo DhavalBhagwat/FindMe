@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:findme/widgets/InfoSection.dart';
 import 'package:findme/sync/NetworkService.dart';
 import 'package:findme/widgets/LoadingIndicator.dart';
+import 'package:findme/utils/Styles.dart';
 
 class HomeActivity extends StatefulWidget {
 
@@ -125,12 +126,7 @@ class _HomeActivityState extends State<HomeActivity> {
     border: Border(),
     middle: Text(
       'IP Address Tracker',
-      style: TextStyle(
-          color: Colors.white,
-          fontSize: 20.0,
-          fontFamily: "Rubik",
-          fontWeight: FontWeight.bold
-      ),
+      style: Styles.titleStyle()
     ),
   );
 
@@ -166,7 +162,7 @@ class _HomeActivityState extends State<HomeActivity> {
               ),
               contentPadding: EdgeInsets.only(left: 15.0, top: 15.0),
               hintText: 'Search IP',
-              hintStyle: TextStyle(color: Color(0xFF969696))
+              hintStyle: Styles.searchStyle()
           ),
           keyboardType: TextInputType.number
       ),
