@@ -4,6 +4,8 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:findme/widgets/InfoSection.dart';
+import 'package:findme/sync/NetworkService.dart';
+import 'package:findme/widgets/LoadingIndicator.dart';
 
 class HomeActivity extends StatefulWidget {
 
@@ -14,13 +16,15 @@ class HomeActivity extends StatefulWidget {
 
 class _HomeActivityState extends State<HomeActivity> {
 
-  String? _ipAddress, _location, _timeZone, _isp;
-  double? _latitude, _longitude;
+  String? _location = "", _timeZone = "", _isp = "";
+  double? _latitude = 0.0, _longitude = 0.0;
+  TextEditingController? _ipAddress;
+  Future<void>? _get;
 
   @override
   void initState() {
-    _ipAddress="1"; _location="2"; _timeZone="3"; _isp="4";
-    _latitude =51.5; _longitude= -0.09;
+    _ipAddress = TextEditingController();
+    _get = _getIPLocation();
     super.initState();
   }
 
@@ -56,33 +60,35 @@ class _HomeActivityState extends State<HomeActivity> {
           Expanded(
             flex: 6,
             child: Container(
-              child: FlutterMap(
-                options: MapOptions(
-                  center: LatLng(_latitude!, _longitude!),
-                  zoom: 12.0,
-                ),
-                layers: [
-                  TileLayerOptions(
-                    urlTemplate: "https://api.mapbox.com/styles/v1/1157857/tiles/{z}/{x}/{y}?access_token=at_5fJFnup2XWIiKcr37u7JN3jYpTbhY",
+              child: FutureBuilder<void>(
+                future: _get,
+                builder: (context, snapshot) => snapshot.connectionState == ConnectionState.done ? FlutterMap(
+                  options: MapOptions(
+                    center: LatLng(_latitude!, _longitude!),
+                    zoom: 12.0,
                   ),
-                  MarkerLayerOptions(
-                    markers: [
-                      Marker(
+                  layers: [
+                    TileLayerOptions(
+                      urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                      subdomains: ['a', 'b', 'c'],
+                      tileProvider: NonCachingNetworkTileProvider(),
+                    ),
+                    MarkerLayerOptions(
+                      markers: [
+                        Marker(
                           width: 20.0,
                           height: 20.0,
                           point:  LatLng(_latitude!, _longitude!),
-                          builder: (ctx) => SvgPicture.asset(
-                            "assets/icon-location.svg",
-                            semanticsLabel: 'Acme Logo'
+                          builder: (ctx) => SvgPicture.asset("assets/icon-location.svg", semanticsLabel: 'Marker'
+                          ),
                         ),
-
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ): LoadingIndicator(),
               ),
-            )
             ),
+          ),
         ],
       ),
       buildInfoCard()
@@ -102,7 +108,7 @@ class _HomeActivityState extends State<HomeActivity> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                InfoSection(title: "IP ADDRESS", value: _ipAddress!),
+                InfoSection(title: "IP ADDRESS", value: _ipAddress?.value.text),
                 InfoSection(title: "LOCATION", value: _location!),
                 InfoSection(title: "TIME ZONE", value: _timeZone!),
                 InfoSection(title: "ISP", value: _isp!),
@@ -154,6 +160,21 @@ class _HomeActivityState extends State<HomeActivity> {
       ),
     ),
   );
+
+  Future<void> _getIPLocation() async {
+    await NetworkService.getInstance.getIPLocation(ipAddress: _ipAddress!.value.text).then((location) {
+      print(location?.toJson());
+      setState(() {
+        _location = location?.city;
+        _timeZone = location?.timeZone;
+        _isp = location?.isp;
+        _latitude = location?.latitude;
+        _longitude = location?.longitude;
+        //_ipAddress!.text = location.ip;
+      });
+    });
+
+  }
 
 }
 
