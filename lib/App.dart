@@ -19,8 +19,7 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      //scrollBehavior: ScrollPhysicsBehaviour(),
-      initialRoute: '/homeActivity',
+      initialRoute: '/loginActivity',
       getPages: Routes.routes,
     );
   }
