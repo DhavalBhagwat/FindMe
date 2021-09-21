@@ -164,7 +164,7 @@ class _HomeActivityState extends State<HomeActivity> {
               hintText: 'Search IP',
               hintStyle: Styles.searchStyle()
           ),
-          keyboardType: TextInputType.number
+          keyboardType: TextInputType.visiblePassword
       ),
     ),
   );
