@@ -17,7 +17,6 @@ class NetworkService {
   }
 
   Future<Location?> getIPLocation({String ipAddress = ""}) async {
-    Location? location;
     try {
       if (ipAddress == "") {
         await http.get(Uri.parse('https://api.ipify.org')).then((response) async {
@@ -27,9 +26,10 @@ class NetworkService {
         });
       }
       return await http.get(Uri.parse('https://geo.ipify.org/api/v1?apiKey=at_5fJFnup2XWIiKcr37u7JN3jYpTbhY&ipAddress=$ipAddress')).then((response) async {
+        print(response.body);
         if (response.statusCode == 200) {
           var json = jsonDecode(response.body);
-          return Location(
+          if (json["location"]['lat'] != 0) return Location(
               latitude: json["location"]['lat'],
               longitude: json["location"]['lng'],
               city: json["location"]['city'],
@@ -37,12 +37,16 @@ class NetworkService {
               ip: json["ip"],
               isp: json["isp"]
           );
-        } else return Location(latitude: 51.5, longitude: -0.09, ip: ipAddress);
+          else {
+            print("here");
+            return Location();
+          }
+        } else return Location();
 
       });
     } catch (error) {
       debugPrint(error.toString());
-      return Location(latitude: 51.5, longitude: -0.09, ip: ipAddress);
+      return Location();
     }
   }
 

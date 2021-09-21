@@ -17,14 +17,14 @@ class HomeActivity extends StatefulWidget {
 
 class _HomeActivityState extends State<HomeActivity> {
 
-  String? _location = "", _timeZone = "", _isp = "";
+  String? _location = "", _timeZone = "", _isp = "", _ipAddress = "";
   double? _latitude = 0.0, _longitude = 0.0;
-  TextEditingController? _ipAddress;
+  TextEditingController? _controller;
   Future<void>? _get;
 
   @override
   void initState() {
-    _ipAddress = TextEditingController();
+    _controller = TextEditingController();
     _get = _getIPLocation();
     super.initState();
   }
@@ -32,8 +32,8 @@ class _HomeActivityState extends State<HomeActivity> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildTopBar(),
       body: _buildBody(context),
+      resizeToAvoidBottomInset: false,
     );
   }
 
@@ -46,20 +46,21 @@ class _HomeActivityState extends State<HomeActivity> {
             child: Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.deepPurpleAccent, Colors.deepPurpleAccent
-                  ],
-                ),
+                  image: DecorationImage(
+                      image: AssetImage("assets/pattern-bg.png"),
+                      fit: BoxFit.cover
+                  )
               ),
               child: Column(
                   children: [
+                    _buildTopBar(),
                     _buildSearchBar(),
                   ],
               ),
             ),
           ),
           Expanded(
-            flex: 6,
+            flex: 4,
             child: Container(
               child: FutureBuilder<void>(
                 future: _get,
@@ -97,7 +98,7 @@ class _HomeActivityState extends State<HomeActivity> {
   );
 
   Widget buildInfoCard() => Positioned(
-      top: MediaQuery.of(context).size.height * 0.10,
+      top: MediaQuery.of(context).size.height * 0.20,
       left: 20.0,
       right: 20.0,
       child: Card(
@@ -109,10 +110,10 @@ class _HomeActivityState extends State<HomeActivity> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                InfoSection(title: "IP ADDRESS", value: _ipAddress?.value.text),
-                InfoSection(title: "LOCATION", value: _location!),
-                InfoSection(title: "TIME ZONE", value: _timeZone!),
-                InfoSection(title: "ISP", value: _isp!),
+                InfoSection(title: "IP ADDRESS", value: _ipAddress),
+                InfoSection(title: "LOCATION", value: _location),
+                InfoSection(title: "TIME ZONE", value: _timeZone),
+                InfoSection(title: "ISP", value: _isp),
               ],
             ),
           ),
@@ -120,13 +121,14 @@ class _HomeActivityState extends State<HomeActivity> {
   );
 
   PreferredSizeWidget _buildTopBar() => CupertinoNavigationBar(
-    backgroundColor: Colors.deepPurpleAccent,
+    backgroundColor: Colors.transparent,
     border: Border(),
     middle: Text(
       'IP Address Tracker',
       style: TextStyle(
           color: Colors.white,
           fontSize: 20.0,
+          fontFamily: "Rubik",
           fontWeight: FontWeight.bold
       ),
     ),
@@ -138,30 +140,33 @@ class _HomeActivityState extends State<HomeActivity> {
       elevation: 5.0,
       borderRadius: BorderRadius.circular(18.0),
       child: TextFormField(
+          controller: _controller,
           decoration: InputDecoration(
               border: InputBorder.none,
-              suffixIcon: Container(
-                decoration: BoxDecoration(
-                    color: Colors.black,
+              suffixIcon: Material(
+                borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(18.0),
+                    bottomRight: Radius.circular(18.0)
+                ),
+                color: Colors.black,
+                child: InkWell(
                     borderRadius: BorderRadius.only(
                         topRight: Radius.circular(18.0),
                         bottomRight: Radius.circular(18.0)
                     ),
-                ),
-                child: GestureDetector(
-                  child: Icon(
-                      Icons.arrow_forward_ios,
-                      color: Colors.white,
-                      size: 20.0
-                  ),
-                  onTap: () {
-                    _get = _getIPLocation();
-                  },
+                    child: Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.white,
+                        size: 20.0
+                    ),
+                    onTap: () {
+                      _get = _getIPLocation();
+                    }
                 ),
               ),
               contentPadding: EdgeInsets.only(left: 15.0, top: 15.0),
               hintText: 'Search IP',
-              hintStyle: TextStyle(color: Colors.grey)
+              hintStyle: TextStyle(color: Color(0xFF969696))
           ),
           keyboardType: TextInputType.number
       ),
@@ -169,15 +174,14 @@ class _HomeActivityState extends State<HomeActivity> {
   );
 
   Future<void> _getIPLocation() async {
-    await NetworkService.getInstance.getIPLocation(ipAddress: _ipAddress!.value.text).then((location) {
-      print(location?.toJson());
+    await NetworkService.getInstance.getIPLocation(ipAddress: _controller!.value.text).then((location) {
       setState(() {
         _location = location?.city;
         _timeZone = location?.timeZone;
         _isp = location?.isp;
         _latitude = location?.latitude;
         _longitude = location?.longitude;
-        _ipAddress!.text = location!.ip!;
+        _ipAddress = location?.ip;
       });
     });
 

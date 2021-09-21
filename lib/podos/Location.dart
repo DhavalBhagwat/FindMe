@@ -1,19 +1,19 @@
 class Location {
 
-  double? latitude = 0.0;
-  double? longitude = 0.0;
-  String? city = "--";
-  String? timeZone = "--";
-  String? ip = "--";
-  String? isp = "--";
+  double? latitude;
+  double? longitude;
+  String? city;
+  String? timeZone;
+  String? ip;
+  String? isp;
 
   Location({
-    this.latitude,
-    this.longitude,
-    this.city,
-    this.timeZone,
-    this.ip,
-    this.isp
+    this.latitude = 51.5,
+    this.longitude = -0.09,
+    this.city = "--",
+    this.timeZone = "--",
+    this.ip = "--",
+    this.isp = "--"
   });
 
   factory Location.fromJson(Map<String, dynamic> json) {

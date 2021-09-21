@@ -19,7 +19,7 @@ class InfoSection extends StatelessWidget {
           Text(
             title!,
             style: TextStyle(
-                color: Colors.grey,
+                color: Color(0xFF969696),
                 fontSize: 12.0,
                 fontWeight: FontWeight.bold
             ),
@@ -29,6 +29,7 @@ class InfoSection extends StatelessWidget {
             value!,
             textAlign: TextAlign.center,
             style: TextStyle(
+                color: Color(0xFF2B2B2B),
                 fontSize: 20.0,
                 fontWeight: FontWeight.bold
             ),
