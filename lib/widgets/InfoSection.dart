@@ -27,6 +27,7 @@ class InfoSection extends StatelessWidget {
           SizedBox(height: 4.0),
           Text(
             value!,
+            textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.bold

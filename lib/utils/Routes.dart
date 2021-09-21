@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'LoginActivity.dart';
-import 'HomeActivity.dart';
+import '../screens/LoginActivity.dart';
+import '../screens/HomeActivity.dart';
 
 class Routes {
 

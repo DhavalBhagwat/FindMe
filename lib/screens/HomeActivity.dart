@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -147,16 +148,22 @@ class _HomeActivityState extends State<HomeActivity> {
                         bottomRight: Radius.circular(18.0)
                     ),
                 ),
-                child: Icon(
-                    Icons.arrow_forward_ios,
-                    color: Colors.white,
-                    size: 20.0
+                child: GestureDetector(
+                  child: Icon(
+                      Icons.arrow_forward_ios,
+                      color: Colors.white,
+                      size: 20.0
+                  ),
+                  onTap: () {
+                    _get = _getIPLocation();
+                  },
                 ),
               ),
               contentPadding: EdgeInsets.only(left: 15.0, top: 15.0),
               hintText: 'Search IP',
               hintStyle: TextStyle(color: Colors.grey)
           ),
+          keyboardType: TextInputType.number
       ),
     ),
   );
@@ -170,7 +177,7 @@ class _HomeActivityState extends State<HomeActivity> {
         _isp = location?.isp;
         _latitude = location?.latitude;
         _longitude = location?.longitude;
-        //_ipAddress!.text = location.ip;
+        _ipAddress!.text = location!.ip!;
       });
     });
 

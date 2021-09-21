@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:get/get.dart';
 import 'package:sawo/sawo.dart';
-import 'package:findme/SawoUtils.dart';
+import 'package:findme/utils/SawoUtils.dart';
 
 class LoginActivity extends StatefulWidget {
 
